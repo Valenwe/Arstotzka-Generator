@@ -1,0 +1,7 @@
+[
+   {
+      "music": [{ "filename": "sounds/Death.wav" }],
+      "next": [{ "filename": "sounds/button-up.wav" }],
+      "letter": [{ "filename": "sounds/text-reveal0.wav" }, { "filename": "sounds/text-reveal1.wav" }, { "filename": "sounds/text-reveal2.wav" }, { "filename": "sounds/text-reveal3.wav" }]
+   }
+]
