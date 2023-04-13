@@ -1,3 +1,4 @@
 *.mp3
+*.exe
 *.mp4
 !example.mp4
