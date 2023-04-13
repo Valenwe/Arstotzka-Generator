@@ -14,7 +14,7 @@ import numpy as np
 from PIL import ImageFont, ImageDraw, Image
 
 # Video handle
-from moviepy.editor import VideoFileClip, AudioFileClip
+from moviepy.editor import VideoFileClip
 import cv2
 
 # Audio handle
@@ -24,15 +24,22 @@ from pydub import AudioSegment
 # ░█░░░█░█░█░█░█▀▀░░█░░█░█
 # ░▀▀▀░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀
 
+# Load sound config
 with open("sounds/sounds.json", "r") as file:
     sounds = json.loads(file.read())[0]
+
+# List all possible images
+nb_images = 0
+for x in os.listdir("imgs"):
+    if x.endswith(".png") and "inspector" not in x:
+        nb_images += 1
 
 # Load text to display
 with open("report.txt", "r") as file:
     text = file.read()
 lines = text.split("\n")
-if len(lines) > 4:
-    logging.error("Too many lines, maximum is 4.")
+if len(lines) >= nb_images:
+    logging.error(f"Too many lines, maximum is {nb_images}.")
     exit()
 elif len(lines) == 0 or lines[0].strip() == "":
     logging.error("No text found, please fill in the file 'report.txt'")
@@ -66,6 +73,24 @@ background = np.zeros((frame_size[1], frame_size[0], 3), dtype=np.uint8)
 # ░█░█░█▀▀░░█░░█▀█░█░█░█░█░▀▀█
 # ░▀░▀░▀▀▀░░▀░░▀░▀░▀▀▀░▀▀░░▀▀▀
 
+def get_text_size(text: str, font: ImageFont.FreeTypeFont):
+    """get_text_size
+
+    Will calculate the width and the height of a given text.
+
+    Args:
+        text  (str): the text to check.
+        font: (ImageFont): the font used for the text.
+
+    Returns:
+        (width, height)
+    """
+    box = font.getbbox(text)
+    # width = box[2] - box[0]
+    # height = box[3] - box[1]
+    return (box[2], box[3])
+
+
 def create_text_image(text: str, frame: list, x = int(width / 2), y = int(height * 2/3)) -> list:
     """create_text_image
 
@@ -93,7 +118,11 @@ def create_text_image(text: str, frame: list, x = int(width / 2), y = int(height
             temp_text += " "
         temp_text += word
 
-        (line_width, line_height) = font.getsize(temp_text)
+        (line_width, temp_line_height) = get_text_size(temp_text, font)
+
+        # Save the highest height
+        if line_height < temp_line_height:
+            line_height = temp_line_height
 
         if line_width >= 800:
             lines.append(temp_text)
@@ -102,7 +131,7 @@ def create_text_image(text: str, frame: list, x = int(width / 2), y = int(height
     lines.append(temp_text)
 
     for i in range(len(lines)):
-        line_width = font.getsize(lines[i])[0]
+        line_width = get_text_size(lines[i], font)[0]
         draw.text((x - int(line_width / 2), y + line_height * i), lines[i], font=font, fill=font_color)
 
     return np.array(img)
@@ -225,10 +254,10 @@ sound_frames = [{"type": "music", "frame": frame_counter}]
 for line_counter in tqdm(range(len(lines)), desc="Writing text", colour="RED"):
     line = lines[line_counter]
 
-    # If last line, put the last image index automatically
+    # If last line, put the arstotzka image automatically
     image_index = line_counter
     if line_counter == len(lines) - 1:
-        image_index = 4
+        image_index = "arstotzka"
 
     # add image
     done = False

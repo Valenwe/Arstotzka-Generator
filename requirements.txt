@@ -1,6 +1,6 @@
 moviepy==1.0.3
-numpy==1.22.3
-opencv_python==4.5.5.64
+numpy==1.24.1
+opencv_python==4.7.0.72
 Pillow==9.5.0
 pydub==0.25.1
-tqdm==4.64.0
+tqdm==4.64.1
