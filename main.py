@@ -39,7 +39,7 @@ with open("report.txt", "r") as file:
     text = file.read()
 lines = text.split("\n")
 if len(lines) >= nb_images:
-    logging.error(f"Too many lines, maximum is {nb_images}.")
+    logging.error(f"Too many lines in your report, maximum is {nb_images - 1}.")
     exit()
 elif len(lines) == 0 or lines[0].strip() == "":
     logging.error("No text found, please fill in the file 'report.txt'")
