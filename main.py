@@ -346,3 +346,5 @@ try:
     os.remove(audio_file)
 except:
     logging.error("Could not remove temp files.")
+
+print("Video successfully created as 'jail.mp4'.\nGlory to Arstotzka.")
