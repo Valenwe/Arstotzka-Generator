@@ -35,7 +35,7 @@ for x in os.listdir("imgs"):
         nb_images += 1
 
 # Load text to display
-with open("report.txt", "r") as file:
+with open("report.txt", "r", encoding="utf-8") as file:
     text = file.read()
 lines = text.split("\n")
 if len(lines) >= nb_images:
@@ -132,7 +132,7 @@ def create_text_image(text: str, frame: list, x = int(width / 2), y = int(height
 
     for i in range(len(lines)):
         line_width = get_text_size(lines[i], font)[0]
-        draw.text((x - int(line_width / 2), y + line_height * i), lines[i], font=font, fill=font_color)
+        draw.text((x - int(line_width / 2), y + line_height * i), u"{}".format(lines[i]), font=font, fill=font_color)
 
     return np.array(img)
 
