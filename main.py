@@ -38,8 +38,12 @@ for x in os.listdir("imgs"):
 with open("report.txt", "r", encoding="utf-8") as file:
     text = file.read()
 lines = text.split("\n")
+
+# Remove empty lines
+lines = [line for line in lines if line.strip() != '']
+
 if len(lines) >= nb_images:
-    logging.error(f"Too many lines in your report, maximum is {nb_images - 1}.")
+    logging.error(f"Too many lines in your report (currently {len(lines)}), maximum is {nb_images - 1}.")
     exit()
 elif len(lines) == 0 or lines[0].strip() == "":
     logging.error("No text found, please fill in the file 'report.txt'")
@@ -176,7 +180,14 @@ def create_image(img_file: str, frame: list, percentage: float = 1) -> list:
     Returns:
         new frame (list): the frame as a pixel list.
     """
+    target_size = (480, 320)
     image = cv2.imread(img_file)
+
+    # Check if the image size matches the target size
+    if image.shape[1] != target_size[0] or image.shape[0] != target_size[1]:
+        # Resize the image to the target size
+        image = cv2.resize(image, target_size, interpolation=cv2.INTER_LINEAR)
+
     image_size = (image.shape[1], image.shape[0])
 
     x1 = int(width / 2 - image_size[0] / 2)
@@ -339,12 +350,10 @@ command = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-stats", "-y",
 
 # print(" ".join(command))
 subprocess.call(command, shell=True)
+video.close()
 
-# Removing temp files (might not work)
-try:
-    os.remove(video_file)
-    os.remove(audio_file)
-except:
-    logging.error("Could not remove temp files.")
+# Removing temp files
+command = ["del", audio_file, ";", "del", video_file]
+subprocess.call(command, shell=True)
 
 print("Video successfully created as 'jail.mp4'.\nGlory to Arstotzka.")

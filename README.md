@@ -2,7 +2,7 @@
 
 ![Glory to Arstotzka](imgs/arstotzka.png)
 
-A simple video generator of a custom ending of the famous Papers Please game.
+A simple video generator of a custom ending of the famous Papers Please game. Works on a Windows environment.
 It uses the images from the **ending n°10** of the game.
 
 ## [Example](example.mp4)
@@ -20,5 +20,5 @@ N.B: There will always be a last image with the **Arstotzka** propaganda and the
 
 ## Can I custom the images?
 
-- Of course you can! To do that, you have to keep the same syntax (starting from *0.png* to *X.png*) in `/imgs`, and the same resolution aswell, such as **480 x 320**.
+- Of course you can! To do that, you have to keep the same syntax (starting from *0.png* to *X.png*) in `/imgs`, and the same resolution aswell, such as **480 x 320** (if the resolution is different, the program will stretch the image).
 - It is also possible to change the background music, which correspond to the file `sounds/Death.wav`.
