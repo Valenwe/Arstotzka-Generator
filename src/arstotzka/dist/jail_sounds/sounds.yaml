@@ -1,0 +1,11 @@
+- music:
+    - Theme.wav
+    - border-callguards.wav
+    - shutter-drop.wav
+  next:
+    - border-alarm.wav
+  letter:
+    - text-reveal0.wav
+    - text-reveal1.wav
+    - text-reveal2.wav
+    - text-reveal3.wav

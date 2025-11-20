@@ -1,0 +1,8 @@
+- music: Death.wav
+  next:
+    - button-up.wav
+  letter:
+    - text-reveal0.wav
+    - text-reveal1.wav
+    - text-reveal2.wav
+    - text-reveal3.wav

@@ -1,0 +1,1 @@
+"""Arstotzka Generator module."""

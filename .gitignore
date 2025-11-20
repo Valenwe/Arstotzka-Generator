@@ -2,3 +2,8 @@
 *.exe
 *.mp4
 !example.mp4
+!src/**/*.mp3
+
+*.egg-info/
+build/
+__pycache__/

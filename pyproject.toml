@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arstotzka-generator"
+version = "1.1"
+description = "Generator of Arstotzka propaganda videos."
+authors = [
+    { name = "Valenwe" }
+]
+dependencies = [
+    "opencv_python>=4.12.0.88",
+    "Pillow>=12.0.0",
+    "pydub>=0.25.1",
+    "tqdm>=4.67.1",
+    "click>=8.2.1",
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+keywords = ["cli", "linter"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+arstotzka = ["dist/**/*"]
+
+[project.scripts]
+arstotzka = "arstotzka.main:main"
+
+[tool.mypy]
+files = "src"
+exclude = "build"
+ignore_missing_imports = true
+disallow_untyped_defs = true
+warn_return_any = true
+warn_unused_ignores = true
+strict_optional = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+fix = true
+
+[tool.ruff.lint]
+select = ["E", "F", "D", "I", "B", "C", "Q", "S", "T", "N"]
+ignore = [
+    "E501",   # Line length (handled by formatter)
+    "D100",   # Missing docstring in public module
+    "D101",   # Missing docstring in public class
+    "D102",   # Missing docstring in public method
+    "D107",   # Missing docstring in __init__
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
